@@ -7,3 +7,5 @@ drf-yasg
 djangorestframework
 django-filter
 django-modeltranslation
+django-redis
+cryptography==41.0.7
