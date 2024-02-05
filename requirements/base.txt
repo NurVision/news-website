@@ -9,3 +9,4 @@ django-filter
 django-modeltranslation
 django-redis
 cryptography==41.0.7
+django-recaptcha==3.0.0

@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = [
     "drf_yasg",
     "corsheaders",
     "modeltranslation",
+    "captcha"
 ]
 
 REST_FRAMEWORK = {
@@ -180,3 +181,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 # CYPHER CONFIGURATION
 # AES
 AES_KEY = env.str("AES_KEY", "")
+
+# RECAPTCHA
+RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_PUBLIC_KEY", "6LdlOWYpAAAAAOEsejvu7mT-tYr9PBmMlYbVio7R")
+RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_PRIVATE_KEY", "6LdlOWYpAAAAAP2nediVlYsjEXrFZpzH4DZlUarQ")
