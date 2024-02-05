@@ -4,6 +4,9 @@
 {% get_jazzmin_settings request as jazzmin_settings %}
 {% get_jazzmin_ui_tweaks as jazzmin_ui %}
 
+<title>{% block title %}{{ title }}{% endblock %}</title>
+
+
 {% block content %}
     <p class="login-box-msg">{{ jazzmin_settings.welcome_sign }}</p>
     <form action="{{ app_path }}" method="post">
