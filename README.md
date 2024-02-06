@@ -7,7 +7,7 @@
 ### install requirements
 
 ```bash
-python3 -m venv env 
+python3 -m venv env
 source env/bin/activate
 pip install -r requirements/develop.text
 ```
@@ -57,4 +57,3 @@ pre-commit install
 ```
 
 # [Bakend checklist.](https://ruzimurodovnodirjon.notion.site/ruzimurodovnodirjon/Backend-Checklist-90f8dd9a09744d19a7b43cd0aa77d9ad)you must check your project by checklist
-
