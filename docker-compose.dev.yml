@@ -24,7 +24,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    command: ./start.sh
+    command: ./entrypoint.dev.sh
     security_opt:
       - seccomp:unconfined
     volumes:

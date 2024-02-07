@@ -12,8 +12,8 @@ ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 # install system dependencies
 RUN apt-get update && apt-get install -y gettext
 
-COPY requirements/develop.txt develop.txt
-COPY requirements/base.txt base.txt
+COPY ./requirements/develop.txt develop.txt
+COPY ./requirements/base.txt base.txt
 
 COPY requirements/ .
 
@@ -36,15 +36,5 @@ RUN mkdir $APP_HOME/media
 RUN mkdir $APP_HOME/locale
 WORKDIR $APP_HOME
 
-# copy entrypoint.dev.sh
-COPY entrypoint.dev.sh $APP_HOME
-
 # copy project
 COPY . $APP_HOME
-
-# chown all the files to the app user
-# change to the app user
-
-# run entrypoint.prod.sh
-RUN ["chmod", "+x", "/home/app/web/entrypoint.dev.sh"]
-ENTRYPOINT ["/home/app/web/entrypoint.dev.sh"]

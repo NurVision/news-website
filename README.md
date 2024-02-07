@@ -3,6 +3,7 @@
 ## How to set up project (with Docker)
 
 Give permission to docker script: ```chmod +x ./docker-compose```
+Give permission to docker script: ```chmod +x entrypoint.dev.sh```
 
 ### Docker compose file
 Build and docker up containers: ```docker-compose -f docker-compose.dev.yml up -d --build```
