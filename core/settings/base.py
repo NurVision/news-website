@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
 import logging
+import os
 from pathlib import Path
 
 import environ
@@ -56,7 +56,7 @@ THIRD_PARTY_APPS = [
     "corsheaders",
     "modeltranslation",
     "captcha",
-    'nplusone.ext.django',
+    "nplusone.ext.django",
 ]
 
 REST_FRAMEWORK = {
@@ -83,7 +83,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'nplusone.ext.django.NPlusOneMiddleware',
+    "nplusone.ext.django.NPlusOneMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -139,20 +139,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-NPLUSONE_LOGGER = logging.getLogger('nplusone')
+NPLUSONE_LOGGER = logging.getLogger("nplusone")
 NPLUSONE_LOG_LEVEL = logging.WARN
 
 LOGGING = {
-    'version': 1,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+    "version": 1,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
     },
-    'loggers': {
-        'nplusone': {
-            'handlers': ['console'],
-            'level': 'WARN',
+    "loggers": {
+        "nplusone": {
+            "handlers": ["console"],
+            "level": "WARN",
         },
     },
 }
@@ -191,6 +191,9 @@ CACHES = {
         "KEY_PREFIX": "boilerplate",  # todo: you must change this with your project name or something else
     }
 }
+
+REDIS_HOST = env.str("REDIS_HOST", "localhost")
+
 
 # CELERY CONFIGURATION
 CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", "redis://localhost:6379")
