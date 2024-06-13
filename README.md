@@ -65,4 +65,42 @@ pip install pre-commit
 pre-commit install
 ```
 
-# [Back-End checklist](https://ruzimurodovnodirjon.notion.site/ruzimurodovnodirjon/Backend-Checklist-90f8dd9a09744d19a7b43cd0aa77d9ad) you must check your project by checklist
+
+# Back-End checklist:
+## 1. Environment Configuration:
+- [ ] Ensure that the Django project settings are properly configured for the production environment.
+- [ ] Set <span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">DEBUG</span> to <span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">False</span> in the production settings (<span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">settings.py</span>).
+- [ ] Verify that the <span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">ALLOWED_HOSTS</span> setting includes the production domain names or IP addresses.
+## 2. Security:
+- [ ] Secure sensitive data, such as secret keys and database credentials, by storing them in environment variables or a secure secrets management system.
+- [ ] Implement Cross-Site Request Forgery (CSRF) protection.
+- [ ] In Login forms google recaptcha is required.
+## 3. Database:
+- [ ] Check all migrations is correctly created.
+- [ ] Optimize database queries for performance.
+## 4. Static and Media Files:
+- [ ] Collect and compress static files using <span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">collectstatic</span> and configure their storage.
+- [ ] Handle user-uploaded media files securely and efficiently.
+- [ ] Using media compressing.
+- [ ] Creating media models for all media.
+## 5. Logging and Monitoring:
+- [ ] Implement monitoring and alerting using tools like Prometheus, Grafana, Flower, Sentry(must have)
+## 6. Performance Optimization:
+- [ ] Profile and optimize database queries, views, and templates for performance.(DEBUGTOOLBAR, DJANGO-SILK)
+- [ ] Implement caching mechanisms for frequently accessed data. (depends on project)
+- [ ] Configure web server settings, such as Gunicorn or Uvicorn, for optimal performance
+## 7. Testing:
+- [ ] Conduct integration tests, Unit Tests
+- [ ] Set up a staging environment that closely mirrors the production environment for testing purposes.(if needed)
+## 8. Documentation:
+- [ ] Swagger
+- [ ] Ensure that the codebase is well-documented, including comments and docstrings  and add doc for apis to swagger.
+## 9. Common Coding Requirements:
+- [ ] Pre-commit
+- [ ] Using right branches like dev, master
+- [ ] Search history add (new api)
+- [ ] Notification from initial
+- [ ] Full Readme (deployment and project set up guide)
+- [ ] Docker required for production deployment
+## 10. Testing the Production Environment:
+- [ ] Conduct load testing to ensure the application can handle expected traffic volumes(Locust.io)
