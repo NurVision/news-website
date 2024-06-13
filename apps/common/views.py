@@ -12,6 +12,8 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 # Configure Redis connection
 redis_client = redis.StrictRedis(
     host=settings.REDIS_HOST,
+    port=settings.REDIS_PORT,
+    db=settings.REDIS_DB,
 )
 
 
