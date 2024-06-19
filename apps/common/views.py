@@ -26,7 +26,7 @@ def health_check_redis(request):
     except redis.ConnectionError:
         return Response(
             {"status": "error", "message": "Redis server is not working."},
-            status=status.HTTP_404_NOT_FOUND,
+            status=status.HTTP_400_BAD_REQUEST,
         )
 
 
