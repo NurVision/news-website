@@ -1,4 +1,6 @@
-## Django boilerplate
+# Django-Boilerplate
+
+Django-Boilerplate for start a new project
 
 ## How to set up project (with Docker)
 
@@ -6,10 +8,13 @@ Give permission to docker script: ```chmod +x ./docker-compose```
 Give permission to docker script: ```chmod +x entrypoint.dev.sh```
 
 ### Docker compose file
+
 Build and docker up containers: ```docker-compose -f docker-compose.dev.yml up -d --build```
 
 ### Use docker-compose file
-```./docker-compose makemigrations``` or ```docker-compose -f docker-compose.dev.yml exec backend python manage.py makemigrations```
+
+```./docker-compose makemigrations```
+or ```docker-compose -f docker-compose.dev.yml exec backend python manage.py makemigrations```
 
 ## How to run project locally bash script (Linux, Mac)
 
@@ -65,42 +70,62 @@ pip install pre-commit
 pre-commit install
 ```
 
+# Back-End Checklist
 
-# Back-End checklist:
 ## 1. Environment Configuration:
+
 - [ ] Ensure that the Django project settings are properly configured for the production environment.
-- [ ] Set <span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">DEBUG</span> to <span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">False</span> in the production settings (<span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">settings.py</span>).
-- [ ] Verify that the <span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">ALLOWED_HOSTS</span> setting includes the production domain names or IP addresses.
+- [ ] Set `DEBUG` to `False` in the production settings (`settings.py`).
+- [ ] Verify that the `ALLOWED_HOSTS` setting includes the production domain names or IP addresses.
+
 ## 2. Security:
-- [ ] Secure sensitive data, such as secret keys and database credentials, by storing them in environment variables or a secure secrets management system.
+
+- [ ] Secure sensitive data, such as secret keys and database credentials, by storing them in environment variables or a
+  secure secrets management system.
 - [ ] Implement Cross-Site Request Forgery (CSRF) protection.
-- [ ] In Login forms google recaptcha is required.
+- [ ] Require Google reCAPTCHA in login forms.
+
 ## 3. Database:
-- [ ] Check all migrations is correctly created.
+
+- [ ] Ensure all migrations are correctly created.
 - [ ] Optimize database queries for performance.
+
 ## 4. Static and Media Files:
-- [ ] Collect and compress static files using <span style="font-family:&quot;SFMono-Regular&quot;, Menlo, Consolas, &quot;PT Mono&quot;, &quot;Liberation Mono&quot;, Courier, monospace;line-height:normal;background:rgba(135,131,120,.15);color:#EB5757;border-radius:4px;font-size:85%;padding:0.2em 0.4em;font-weight:600" data-token-index="1" spellcheck="false" class="notion-enable-hover">collectstatic</span> and configure their storage.
+
+- [ ] Collect and compress static files using `collectstatic` and configure their storage.
 - [ ] Handle user-uploaded media files securely and efficiently.
-- [ ] Using media compressing.
-- [ ] Creating media models for all media.
+- [ ] Compress media files.
+- [ ] Create media models for all media.
+
 ## 5. Logging and Monitoring:
-- [ ] Implement monitoring and alerting using tools like Prometheus, Grafana, Flower, Sentry(must have)
+
+- [ ] Implement monitoring and alerting using tools like Prometheus, Grafana, Flower, and Sentry (must-have).
+
 ## 6. Performance Optimization:
-- [ ] Profile and optimize database queries, views, and templates for performance.(DEBUGTOOLBAR, DJANGO-SILK)
-- [ ] Implement caching mechanisms for frequently accessed data. (depends on project)
-- [ ] Configure web server settings, such as Gunicorn or Uvicorn, for optimal performance
+
+- [ ] Profile and optimize database queries, views, and templates for performance (use `DEBUGTOOLBAR`, `django-silk`).
+- [ ] Implement caching mechanisms for frequently accessed data (depends on project).
+- [ ] Configure web server settings, such as Gunicorn or Uvicorn, for optimal performance.
+
 ## 7. Testing:
-- [ ] Conduct integration tests, Unit Tests
-- [ ] Set up a staging environment that closely mirrors the production environment for testing purposes.(if needed)
+
+- [ ] Conduct integration tests and unit tests.
+- [ ] Set up a staging environment that closely mirrors the production environment for testing purposes (if needed).
+
 ## 8. Documentation:
-- [ ] Swagger
-- [ ] Ensure that the codebase is well-documented, including comments and docstrings  and add doc for apis to swagger.
+
+- [ ] Ensure that the codebase is well-documented, including comments and docstrings, and add API documentation to
+  Swagger.
+
 ## 9. Common Coding Requirements:
-- [ ] Pre-commit
-- [ ] Using right branches like dev, master
-- [ ] Search history add (new api)
-- [ ] Notification from initial
-- [ ] Full Readme (deployment and project set up guide)
-- [ ] Docker required for production deployment
+
+- [ ] Implement pre-commit hooks.
+- [ ] Use appropriate branches like `dev` and `master`.
+- [ ] Add search history API.
+- [ ] Implement initial notifications.
+- [ ] Provide a complete README (including deployment and project setup guide).
+- [ ] Use Docker for production deployment.
+
 ## 10. Testing the Production Environment:
-- [ ] Conduct load testing to ensure the application can handle expected traffic volumes(Locust.io)
+
+- [ ] Conduct load testing to ensure the application can handle expected traffic volumes (using Locust.io).
