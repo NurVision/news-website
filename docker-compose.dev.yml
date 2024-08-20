@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 services:
   db:
@@ -16,7 +16,22 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_HOST=${DB_HOST}
       - POSTGRES_PORT=${DB_PORT}
+      - POSTGRES_HOST_AUTH_METHOD=md5
+      - POSTGRES_INITDB_ARGS=--auth=md5
     restart: always
+
+  pgbouncer:
+    image: edoburu/pgbouncer
+    container_name: ${PROJECT_NAME}_pgbouncer
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db:5432/db
+      - POOL_MODE=transaction
+      - MAX_DB_CONNECTIONS=500
+      - DEFAULT_POOL_SIZE=40
+      - AUTH_TYPE=md5
+    depends_on:
+      - db
+    restart: on-failure
 
   web: &web
     container_name: ${PROJECT_NAME}_backend
@@ -36,10 +51,12 @@ services:
       - .env
     environment:
       - TZ=Asia/Tashkent
+      - DATABASE_URL=postgres://postgres:password@pgbouncer:5432/db
     ports:
       - 8000:8000
     depends_on:
       - db
+      - pgbouncer
       - redis
 
 #  daphne:
