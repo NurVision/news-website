@@ -14,7 +14,7 @@ Build and docker up containers: ```docker-compose -f docker-compose.dev.yml up -
 ### Use docker-compose file
 
 ```./docker-compose makemigrations```
-or ```docker-compose -f docker-compose.dev.yml exec backend python manage.py makemigrations```
+or ```docker-compose -f docker-compose.dev.yml exec web python manage.py makemigrations```
 
 ## How to run project locally bash script (Linux, Mac)
 

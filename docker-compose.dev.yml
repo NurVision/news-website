@@ -24,7 +24,7 @@ services:
     image: edoburu/pgbouncer
     container_name: ${PROJECT_NAME}_pgbouncer
     environment:
-      - DATABASE_URL=postgres://postgres:password@db:5432/db
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
       - POOL_MODE=transaction
       - MAX_DB_CONNECTIONS=500
       - DEFAULT_POOL_SIZE=40
@@ -51,7 +51,7 @@ services:
       - .env
     environment:
       - TZ=Asia/Tashkent
-      - DATABASE_URL=postgres://postgres:password@pgbouncer:5432/db
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@${PG_BOUNCER_HOST}:${PG_BOUNCER_PORT}/${DB_NAME}
     ports:
       - 8000:8000
     depends_on:
