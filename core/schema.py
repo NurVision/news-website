@@ -17,6 +17,7 @@ schema_view = get_schema_view(
     public=True,
     generator_class=BothHttpAndHttpsSchemaGenerator,
     permission_classes=(permissions.AllowAny,),
+    authentication_classes=[],
 )
 swagger_urlpatterns = [
     re_path(
