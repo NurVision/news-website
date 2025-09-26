@@ -26,6 +26,8 @@ urlpatterns = [
     path("api/v1/common/", include("apps.common.urls", namespace="common")),
     path("api/v1/users/", include("apps.users.urls", namespace="users")),
     path("api/v1/article/", include("apps.article.urls", namespace="article")),
+
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += swagger_urlpatterns

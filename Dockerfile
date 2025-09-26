@@ -1,40 +1,30 @@
-# pull official base image
-FROM python:3.11.5
+# 1. Asosiy Python versiyasini tanlaymiz
+FROM python:3.12.3-slim
 
-# set work directory
-WORKDIR /usr/src/app
-
-# set environment variables
+# 2. Atrof-muhit o'zgaruvchilari (bular o'zgarmaydi)
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
-# install system dependencies
-RUN apt-get update && apt-get install -y gettext
+# 3. Ishchi papka
+WORKDIR /app
 
-COPY ./requirements/develop.txt develop.txt
-COPY ./requirements/base.txt base.txt
+# 4. Tizim kutubxonalarini o'rnatamiz
+RUN apt-get update && apt-get install -y gettext && rm -rf /var/lib/apt/lists/*
 
-COPY requirements/ .
+# 5. AVVAL faqat talablar fayllarini ko'chiramiz. Bu Docker keshini optimallashtiradi.
+COPY requirements/base.txt requirements/production.txt ./requirements/
 
-# install dependencies
-RUN pip install --upgrade pip
-RUN pip install -r develop.txt
+# 6. PRODUCTION uchun kerakli kutubxonalarni o'rnatamiz
+RUN pip install --no-cache-dir -r requirements/production.txt
 
-# copy project
+# 7. Butun loyiha kodini ko'chiramiz
 COPY . .
 
-# create directory for the app user
-RUN mkdir -p /home/app
+# 8. Static fayllarni bir joyga yig'amiz (whitenoise uchun)
+# Bu buyruq `manage.py collectstatic` ni ishga tushiradi
+# Va unga QAYSI SOZLAMALAR faylini ishlatishni aytamiz
+RUN python manage.py collectstatic --noinput --settings=core.settings.production
 
-# create the appropriate directories
-ENV HOME=/home/app
-ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
-RUN mkdir $APP_HOME/static
-RUN mkdir $APP_HOME/media
-RUN mkdir $APP_HOME/locale
-WORKDIR $APP_HOME
-
-# copy project
-COPY . $APP_HOME
+# 9. Ilovani ishga tushirish buyrug'i (GUNICORN web-serveri orqali)
+# BU ENG MUHIM QATOR!
+CMD gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --env DJANGO_SETTINGS_MODULE=core.settings.production

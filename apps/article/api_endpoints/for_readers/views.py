@@ -173,6 +173,7 @@ class ArticleCommentsAPIView(generics.ListCreateAPIView):
         return (
             Comment.objects.filter(article__slug=slug, is_active=True, parent=None)
             .select_related("author", "article")
+            .prefetch_related("replies", "replies__author")
             .order_by("created_at")
         )
 

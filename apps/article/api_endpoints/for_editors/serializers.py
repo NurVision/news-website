@@ -1,6 +1,16 @@
 from rest_framework import serializers
 from apps.article.models import Article, Category, Tag
 
+# Teg nomini qabul qilib, uni bazadan qidiradigan yoki yangi yaratadigan maxsus maydon
+class CreatableSlugRelatedField(serializers.SlugRelatedField):
+    def to_internal_value(self, data):
+        try:
+            # Avval mavjud tegni nomi bo'yicha qidirib ko'ramiz
+            tag, created = Tag.objects.get_or_create(**{self.slug_field: data})
+            return tag
+        except (TypeError, ValueError):
+            self.fail('invalid')
+
 class TagSerializer(serializers.ModelSerializer):
     """Teglar uchun serializer."""
     class Meta:
@@ -24,17 +34,8 @@ class ArticleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = [
-            'id', 
-            'title', 
-            'slug', 
-            'excerpt', 
-            'featured_image', 
-            'author', 
-            'category', 
-            'tags', 
-            'status', 
-            'published_at',
-            'view_count'
+            'id', 'title', 'slug', 'excerpt', 'featured_image', 
+            'author', 'category', 'tags', 'status', 'published_at', 'view_count'
         ]
         read_only_fields = ['slug', 'published_at', 'view_count', 'author']
 
@@ -42,6 +43,13 @@ class ArticleListSerializer(serializers.ModelSerializer):
 class ArticleCreateUpdateSerializer(serializers.ModelSerializer):
     """Maqola yaratish va yangilash uchun serializer."""
     author = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    
+    tags = CreatableSlugRelatedField(
+        many=True,
+        queryset=Tag.objects.all(),
+        slug_field='name',
+        required=False
+    )
 
     class Meta:
         model = Article
@@ -54,29 +62,19 @@ class ArticleCreateUpdateSerializer(serializers.ModelSerializer):
             'author',
             'category',
             'tags',
-            'status'
         ]
         read_only_fields = ['slug', 'published_at', 'view_count']
 
-    def create(self, validated_data):
-        """Yangi maqola yaratish metodi."""
-        tags_data = validated_data.pop('tags', [])
-        article = Article.objects.create(**validated_data)
-        article.tags.set(tags_data)
-        return article
-    
+    # MUHIM O'ZGARISH: Maxsus 'update' metodini qaytaramiz
     def update(self, instance, validated_data):
-        """Maqolani yangilash metodi."""
+        # Avval teglarni ma'lumotlardan ajratib olamiz
         tags_data = validated_data.pop('tags', None)
-        
-        # Maydonlarni yangilash
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        
-        # Maqolani saqlash
-        instance.save()
 
-        # Teglarni yangilash (agar mavjud bo'lsa)
+        # Qolgan barcha maydonlarni ota-klassning 'update' metodi orqali yangilaymiz
+        # Bu 'setattr' orqali birma-bir yangilashdan ancha ishonchli
+        instance = super().update(instance, validated_data)
+
+        # Agar so'rovda teglar bo'lsa, ularni alohida yangilaymiz
         if tags_data is not None:
             instance.tags.set(tags_data)
         
@@ -91,17 +89,8 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = [
-            'id', 
-            'title', 
-            'slug', 
-            'content', 
-            'excerpt', 
-            'featured_image', 
-            'author', 
-            'category', 
-            'tags', 
-            'status', 
-            'published_at',
-            'view_count'
+            'id', 'title', 'slug', 'content', 'excerpt', 'featured_image', 
+            'author', 'category', 'tags', 'status', 'published_at', 'view_count'
         ]
         read_only_fields = ['slug', 'published_at', 'view_count', 'author']
+

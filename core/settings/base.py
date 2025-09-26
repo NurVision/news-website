@@ -248,3 +248,8 @@ SIMPLE_JWT = {
     "SIGNING_KEY": SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000", # React'ning standart manzili
+    "http://127.0.0.1:3000",
+]
