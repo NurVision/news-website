@@ -27,4 +27,4 @@ RUN SECRET_KEY=dummy-key-for-collectstatic DEBUG=False python manage.py collects
 
 # 9. Ilovani ishga tushirish buyrug'i (GUNICORN web-serveri orqali)
 # BU ENG MUHIM QATOR!
-CMD gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --env DJANGO_SETTINGS_MODULE=core.settings.production
+CMD python manage.py migrate --settings=core.settings.production && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --env DJANGO_SETTINGS_MODULE=core.settings.production
