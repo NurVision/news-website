@@ -23,7 +23,8 @@ COPY . .
 # 8. Static fayllarni bir joyga yig'amiz (whitenoise uchun)
 # Bu buyruq `manage.py collectstatic` ni ishga tushiradi
 # Va unga QAYSI SOZLAMALAR faylini ishlatishni aytamiz
-RUN SECRET_KEY=dummy-key-for-collectstatic DEBUG=False python manage.py collectstatic --noinput --settings=core.settings.production
+RUN python manage.py collectstatic --noinput --settings=core.settings.production
+
 # 9. Ilovani ishga tushirish buyrug'i (GUNICORN web-serveri orqali)
 # BU ENG MUHIM QATOR!
 CMD gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --env DJANGO_SETTINGS_MODULE=core.settings.production

@@ -13,6 +13,9 @@ import logging
 import os
 from pathlib import Path
 
+
+import sys
+
 import environ  # type: ignore
 
 
@@ -126,17 +129,31 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": env.str("DB_ENGINE"),
-        "NAME": env.str("DB_NAME"),
-        "USER": env.str("DB_USER"),
-        "PASSWORD": env.get_value("DB_PASSWORD"),
-        "HOST": env.str("DB_HOST"),
-        "PORT": env.str("DB_PORT"),
-        "ATOMIC_REQUESTS": True,
+# DATABASES = {
+#     "default": {
+#         "ENGINE": env.str("DB_ENGINE"),
+#         "NAME": env.str("DB_NAME"),
+#         "USER": env.str("DB_USER"),
+#         "PASSWORD": env.get_value("DB_PASSWORD"),
+#         "HOST": env.str("DB_HOST"),
+#         "PORT": env.str("DB_PORT"),
+#         "ATOMIC_REQUESTS": True,
+#     }
+# }
+
+if 'collectstatic' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
     }
-}
+else:
+    # Boshqa barcha hollarda, haqiqiy PostgreSQL bazasini muhit o'zgaruvchilaridan olamiz.
+    DATABASES = {
+        "default": env.db(),
+    }
+
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
